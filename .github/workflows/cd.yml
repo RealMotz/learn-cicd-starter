@@ -27,5 +27,8 @@ jobs:
       - name: Set up cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
-      - name: Deploy build to GCP
+      - name: Upload to Artifact Registry
         run: gcloud builds submit --tag asia-northeast1-docker.pkg.dev/solar-router-423005-i2/notely-ar-repo/darealmotz/notely:latest .
+
+      - name: Deploy to Cloud Run
+        run: gcloud run deploy notely --image asia-northeast1-docker.pkg.dev/solar-router-423005-i2/notely-ar-repo/darealmotz/notely:latest --region asia-northeast1 --allow-unauthenticated --project solar-router-423005-i2 --max-instances=4
