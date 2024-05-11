@@ -18,3 +18,14 @@ jobs:
 
       - name: Build application
         run: ./scripts/buildprod.sh
+
+      - name: Auth with GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: Set up cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Deploy build to GCP
+        run: gcloud builds submit --tag asia-northeast1-docker.pkg.dev/solar-router-423005-i2/notely-ar-repo/darealmotz/notely:latest .
